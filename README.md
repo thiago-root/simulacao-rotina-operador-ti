@@ -12,15 +12,15 @@ Quando o monitoramento centralizado aponta ausência de dados gerando alarmes su
 
 1. **Configuração da Automação Contínua:** O gatilho temporal foi configurado no daemon do Cron para processar em intervalos de um minuto, garantindo escuta permanente no ambiente:
 
-![Configuração do Agendador](https://githubusercontent.com)
+![Configuração do Agendador](assets/cron_config_minuto.png)
 
 2. **Monitoramento de Rotina Ativo:** O monitoramento contínuo via `tail -f` exibe os ciclos varrendo a pasta sem encontrar novos lotes, gerando o status controlado de `[WARNING]`:
 
-![Esteira em Estado de Espera Contínua](https://githubusercontent.com)
+![Esteira em Estado de Espera Contínua](assets/monitoramento_continuo.png)
 
 3. **Injeção e Resolução de SLA:** Uma carga emergencial (`carga_urgente.txt`) foi injetada manualmente no diretório de entrada. O robô em lote pescou o lote de forma autônoma, processou-o e gerou o log de auditoria `[SUCCESS]`, limpando a área de entrada:
 
-![Mitigação de Incidente de Carga Atrasada](https://githubusercontent.com)
+![Mitigação de Incidente de Carga Atrasada](assets/injecao_sucesso_urgente.png)
 
 ---
 
@@ -30,11 +30,11 @@ Em cenários severos, queries pesadas de banco de dados ou loops internos podem 
 
 1. **Simulação de Gargalo de Rede/Banco:** O script foi alterado via editor de terminal para reter o processo por 300 segundos (`sleep 300`), represando a fila de processamento intencionalmente:
 
-![Configuração do Loop de Travamento no Script](https://githubusercontent.com)
+![Configuração do Loop de Travamento no Script](assets/script_parametrizado_trava.png)
 
 2. **Engenharia Forense de Processos (Derrubada com Kill):** Ao identificar o represamento e o acúmulo de instâncias concorrentes devido ao tempo de trava, executou-se uma busca profunda utilizando o utilitário de sistema `ps aux | grep`. Localizados os identificadores exclusivos, aplicou-se o sinal de encerramento controlado `kill -15` para purgar a fila de execução com segurança:
 
-![Localização e Exclusão Cirúrgica de Processos Travados](https://githubusercontent.com)
+![Localização e Exclusão Cirúrgica de Processos Travados](assets/caca_processo_kill.png)
 
 ---
 
