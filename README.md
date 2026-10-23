@@ -38,21 +38,18 @@ Em cenários severos, queries pesadas de banco de dados ou loops internos podem 
 
 ---
 
-## 🧹 Encerramento do Laboratório & Governança de Infraestrutura
+## 🧹 Encerramento do Turno & Governança de Infraestrutura
 
-Ao concluir a validação técnica da esteira operacional de ponta a ponta, aplicaram-se as regras de governança de ambientes para purgar tarefas temporárias, impedindo estouros desnecessários de armazenamento em disco:
+Uma das responsabilidades críticas de um Operador de TI na passagem e finalização de turnos é garantir a governança e o "decommissioning" (desativação) de rotinas e tarefas temporárias. Isso impede o desperdício de memória e o acúmulo de lixo técnico nos servidores de produção.
 
-1. **Limpeza Completa da Tabela de Tarefas:**
-```bash
-crontab -r
-```
+Ao concluir todas as validações práticas e testes de estresse das janelas batch, o ambiente foi purgado de forma segura através dos seguintes procedimentos:
 
-2. **Auditoria Final de Desativação:**
-```bash
-crontab -l
-```
+1. **Auditoria Forense de Processos Ativos:** Foi realizada uma varredura profunda com o comando `ps aux | grep` para certificar que nenhuma instância zumbi ou travada ficou retida na memória do sistema operacional. O barramento de processos retornou totalmente limpo:
 
-O sistema operacional reportou de forma limpa o status de ambiente finalizado com sucesso:
-```text
-no crontab for thiago-pr
-```
+![Fila de Execução Sem Processos Retidos](assets/auditoria_processos_limpos.png)
+
+2. **Desativação Total do Agendador Crontab:** Para garantir que a esteira batch não executasse fora da janela permitida, limpou-se permanentemente o arquivo de tarefas do daemon com o comando `crontab -r`. A listagem via `crontab -l` ratificou o desligamento seguro:
+
+![Confirmação de Remoção do Crontab](assets/remocao_cron_sucesso.png)
+
+Com estes procedimentos executados e devidamente evidenciados nos registros de auditoria, o turno de sustentação foi encerrado com sucesso, mantendo o ecossistema e o servidor em estado perfeitamente estável e limpo.
