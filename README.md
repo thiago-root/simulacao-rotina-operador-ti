@@ -1,0 +1,1 @@
+# simulacao-rotina-operador-ti
